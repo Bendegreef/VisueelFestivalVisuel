@@ -22,6 +22,8 @@ obj/*
 *.exp
 *.opendb
 *.VC.db
+bin/*
+.vs/*
 
 # Windows shortcuts
 *.lnk
