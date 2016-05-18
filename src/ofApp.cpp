@@ -7,9 +7,9 @@ const float dyingTime = 2;
 
 
 //deel code kris Meeusen
-int nrOfCircles = 1;
+int nrOfCircles = 0;
 float rotation = 0;
-float rotationSteps = 0.01;
+float rotationSteps = 0;
 float lastSwitch;
 bool closing;
 bool opening;
@@ -64,10 +64,10 @@ void ofApp::setup() {
 	ofBackground(0);
 
 	lastSwitch = ofGetElapsedTimef();
-	rotationSteps = 0.4;
+	rotationSteps = 8;
 	snapCounter = 0;
 	bSnapshot = false;
-	arcScale = 0;
+	arcScale = 0.30;
 
 	/*movie.load("video.mov");
 	movie.play();*/
@@ -76,7 +76,7 @@ void ofApp::setup() {
 
 
 	vidGrabber.listDevices();
-	vidGrabber.setDeviceID(1);
+	vidGrabber.setDeviceID(0);
 	vidGrabber.setVerbose(true);
 	vidGrabber.setup(1920, 1080);
 
@@ -123,7 +123,7 @@ void ofApp::update() {
 
 	rotation += rotationSteps;
 
-	if (ofGetElapsedTimef() - lastSwitch > 9 && !closing && !opening)
+	/*if (ofGetElapsedTimef() - lastSwitch > 9 && !closing && !opening)
 	{
 		closing = true;
 		opening = false;
@@ -148,7 +148,7 @@ void ofApp::update() {
 			lastSwitch = ofGetElapsedTimef();
 			opening = false;
 		}
-	}
+	}*/
 
 
 	vidGrabber.update();
@@ -198,7 +198,17 @@ void ofApp::draw() {
 	}
 	title.draw(0,0, 1920, 1080);
 	for (int i = 0; i < contourFinder.size(); i++) {
-		ofDrawCircle(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 20);
+		ofPushMatrix();
+		glTranslatef(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 0);
+		ofScale(arcScale, arcScale, 1);
+		for (int i = 0; i < nrOfCircles; i++)
+		{
+			arc* arcObject = arcs.at(i);
+			arcObject->draw(rotation);
+		}
+
+		ofPopMatrix();
+		//ofDrawCircle(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 20);
 		//slak.draw(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 50, 50);
 	}
 	if (bDebug) {
@@ -215,14 +225,6 @@ void ofApp::draw() {
 	}
 	//ofFill();
 	ofSetLineWidth(4);
-	if (ofGetElapsedTimef() < 10) {
-		ofSetColor(40, 100, 100);
-
-		char fpsStr[255]; // an array of chars
-
-		sprintf(fpsStr, "press [f] to \ntoggle fullscreen\nmove mouse horizontaly\nfor speed");
-		ofDrawBitmapString(fpsStr, ofGetWidth() / 2 - 82, ofGetHeight() / 2 - 30);
-	}
 
 
 	// uncomment to see the frame - currently framerate limited to 60fps
@@ -231,25 +233,6 @@ void ofApp::draw() {
 	sprintf(fpsStr, "frame rate: %f", ofGetFrameRate());
 	ofDrawBitmapString(fpsStr, 10,10);
 	*/
-
-	glTranslatef(ofGetWidth() / 2, ofGetHeight() / 2, 0);
-
-	ofScale(arcScale, arcScale, 1);
-
-	for (int i = 0; i < nrOfCircles; i++)
-	{
-		arc* arcObject = arcs.at(i);
-		arcObject->draw(rotation);
-	}
-
-	// create screenshot
-	if (bSnapshot == true) {
-		screenGrabber.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
-		char fileName[255];
-		sprintf(fileName, "snapshot_%3i.png", snapCounter++);
-		screenGrabber.saveImage(fileName);
-		bSnapshot = false;
-	}
 
 	gui.draw();
 
@@ -263,9 +246,9 @@ void ofApp::createNewArcs()
 	}
 	arcs.clear();
 
-	nrOfCircles = 4 + ofRandom(70);
+	nrOfCircles = 15;
 
-	float innerRadius = 100;
+	float innerRadius = 50;
 	float angle = 0;
 	float cirleAngle = 0;
 	bool clockWise = true;
