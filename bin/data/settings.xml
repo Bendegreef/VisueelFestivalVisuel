@@ -1,0 +1,6 @@
+<group>
+	<threshold>36</threshold>
+	<minArea>3000</minArea>
+	<maxArea>100000</maxArea>
+<group/>
+</group>
