@@ -4,6 +4,7 @@
 #include "ofxCv.h"
 #include "ofxOpenCv.h"
 #include "ofxGui.h"
+#include "arc.h"
 
 class Glow : public ofxCv::RectFollower {
 protected:
@@ -26,6 +27,7 @@ public:
 	void setup();
 	void update();
 	void draw();
+	void mouseReleased(int x, int y, int button);
 
 	float scale;
 
@@ -49,4 +51,12 @@ public:
 
 	ofImage title;
 	ofImage slak;
+
+	vector<arc*> arcs;
+	void createNewArcs();
+	int snapCounter;
+	ofImage screenGrabber;
+	bool bSnapshot;
+	char snapString[255];
+	float arcScale;
 };
