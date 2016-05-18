@@ -14,6 +14,14 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+*.vcxproj*
+obj/*
+*.sdf
+*.rc
+*.sln
+*.exp
+*.opendb
+
 # Windows shortcuts
 *.lnk
 
