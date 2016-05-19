@@ -12,6 +12,7 @@ protected:
 	ofVec2f cur, smooth;
 	float startedDying;
 	ofPolyline all;
+	float lineWidth;
 public:
 	Glow()
 		:startedDying(0) {

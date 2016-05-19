@@ -16,7 +16,7 @@ bool opening;
 
 void Glow::setup(const cv::Rect& track) {
 	color.setHsb(ofRandom(255), 250, 250);
-
+	lineWidth = ofRandom(1, 3);
 	cur = toOf(track).getCenter();
 	smooth = cur;
 }
@@ -42,7 +42,7 @@ void Glow::draw() {
 	ofPushStyle();
 	float size = 1;
 	ofSetColor(255);
-	ofSetLineWidth(2);
+	ofSetLineWidth(lineWidth);
 	if (startedDying) {
 		ofSetColor(ofColor::red);
 		size = ofMap(ofGetElapsedTimef() - startedDying, 0, dyingTime, size, 0, true);
