@@ -15,7 +15,7 @@ bool closing;
 bool opening;
 
 void Glow::setup(const cv::Rect& track) {
-	color.setHsb(100, 250, 250);
+	color.setHsb(ofRandom(255), 250, 250);
 
 	cur = toOf(track).getCenter();
 	smooth = cur;
@@ -38,7 +38,7 @@ void Glow::kill() {
 }
 
 void Glow::draw() {
-	color.setHsb(static_cast<int>(ofGetElapsedTimef()) % 250, 250, 250);
+	//color.setHsb(static_cast<int>(ofGetElapsedTimef()) % 250, 250, 250);
 	ofPushStyle();
 	float size = 1;
 	ofSetColor(255);
@@ -85,10 +85,11 @@ void ofApp::setup() {
 	grayImage.allocate(1920, 1080);
 	grayBg.allocate(1920, 1080);
 	grayDiff.allocate(1920, 1080);
-	beeldOpslaan.allocate(1920, 1080, OF_IMAGE_COLOR);
+	//beeldOpslaan.allocate(1920, 1080, OF_IMAGE_COLOR);
+	//standaard.allocate(1920, 1080, OF_IMAGE_COLOR);
 
-	standaard.load("standaard.jpg");
-	grayBg.setFromPixels(standaard.getPixels());
+	//standaard.load("standaard.jpg");
+	//grayBg.setFromPixels(standaard.getPixels());
 
 	bLearnBakground = false;
 	bDebug = false;
@@ -174,8 +175,8 @@ void ofApp::update() {
 		if (bLearnBakground == true) {
 			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
 			
-			beeldOpslaan.setFromPixels(vidGrabber.getPixels());
-			beeldOpslaan.saveImage("standaard.jpg");
+			//beeldOpslaan.setFromPixels(vidGrabber.getPixels());
+			//beeldOpslaan.saveImage("standaard.jpg");
 			bLearnBakground = false;
 		}
 

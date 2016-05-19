@@ -51,8 +51,8 @@ public:
 
 	ofImage title;
 	ofImage slak;
-	ofImage beeldOpslaan;
-	ofImage standaard;
+	//ofImage beeldOpslaan;
+	//ofImage standaard;
 
 	vector<arc*> arcs;
 	void createNewArcs();
