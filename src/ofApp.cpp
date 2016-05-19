@@ -3,7 +3,7 @@
 using namespace ofxCv;
 using namespace cv;
 
-const float dyingTime = 2;
+const float dyingTime = 600;
 
 
 //deel code kris Meeusen
@@ -33,7 +33,7 @@ void Glow::kill() {
 		startedDying = curTime;
 	}
 	else if (curTime - startedDying > dyingTime) {
-		//dead = true;
+		dead = true;
 	}
 }
 
@@ -51,6 +51,7 @@ void Glow::draw() {
 	//ofDrawCircle(cur, size);
 	ofSetColor(color);
 	all.draw();
+	//all.
 	ofSetColor(255);
 	//ofDrawBitmapString(ofToString(label), cur);
 	ofPopStyle();
@@ -84,8 +85,12 @@ void ofApp::setup() {
 	grayImage.allocate(1920, 1080);
 	grayBg.allocate(1920, 1080);
 	grayDiff.allocate(1920, 1080);
+	beeldOpslaan.allocate(1920, 1080, OF_IMAGE_COLOR);
 
-	bLearnBakground = true;
+	standaard.load("standaard.jpg");
+	grayBg.setFromPixels(standaard.getPixels());
+
+	bLearnBakground = false;
 	bDebug = false;
 	backgroundAuto = false;
 
@@ -162,11 +167,15 @@ void ofApp::update() {
 
 	if (bNewFrame) {
 		colorImg.setFromPixels(vidGrabber.getPixels());
+		
 		//colorImg.mirror(false, true);
 
 		grayImage = colorImg;
 		if (bLearnBakground == true) {
 			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
+			
+			beeldOpslaan.setFromPixels(vidGrabber.getPixels());
+			beeldOpslaan.saveImage("standaard.jpg");
 			bLearnBakground = false;
 		}
 
