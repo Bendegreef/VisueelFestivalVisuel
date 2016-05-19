@@ -83,6 +83,8 @@ void ofApp::setup() {
 	vidGrabber.setVerbose(true);
 	vidGrabber.setup(1920, 1080);
 
+
+
 	colorImg.allocate(1920, 1080);
 	grayImage.allocate(1920, 1080);
 	grayBg.allocate(1920, 1080);
@@ -106,7 +108,8 @@ void ofApp::setup() {
 	gui.add(thresholdSlider.setup("threshold", 40, 1, 300));
 	gui.add(minArea.setup("minArea", 40, 1, 30000));
 	gui.add(maxArea.setup("maxArea", 540, 1, 100000));
-
+	gui.add(learningTime.set("Learning Time", 30, 0, 30));
+	gui.add(thresholdValue.set("Threshold Value", 10, 0, 255));
 	gui.loadFromFile("settings.xml");
 
 	ofSetFrameRate(60);
@@ -169,35 +172,41 @@ void ofApp::update() {
 	}*/
 
 	if (bNewFrame) {
+
+		runningBackground.setLearningTime(learningTime);
+		runningBackground.setThresholdValue(thresholdValue);
+		runningBackground.update(vidGrabber, threshold);
+		threshold.update();
+
 		colorImg.setFromPixels(vidGrabber.getPixels());
 		
 		//colorImg.mirror(false, true);
-
-		grayImage = colorImg;
+		
+		grayImage.setFromPixels(threshold.getPixels());
 		if (bLearnBakground == true) {
-			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
+			//grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
 			
 			//beeldOpslaan.setFromPixels(vidGrabber.getPixels());
 			//beeldOpslaan.saveImage("standaard.jpg");
-			bLearnBakground = false;
+			//bLearnBakground = false;
 		}
 
 		// take the abs value of the difference between background and incoming and then threshold:
-		grayDiff.absDiff(grayBg, grayImage);
-		grayDiff.threshold(thresholdSlider);
+		//grayDiff.absDiff(grayBg, grayImage);
+		//grayDiff.threshold(thresholdSlider);
 
-		//contourFinder.findContours(grayDiff, minArea, maxArea, 4, false);
 		contourFinder.setMaxArea(maxArea);
 		contourFinder.setMinArea(minArea);
-		contourFinder.findContours(grayDiff);
-		tracker.track(contourFinder.getBoundingRects());
+		contourFinder.findContours(grayImage);
+		//tracker.track(contourFinder.getBoundingRects());
+	
 		
 	}
 
 }
 
 void ofApp::draw() {
-	
+
 	ofSetColor(255);
 	//vidGrabber.draw(vidGrabber.getWidth(), 0, -vidGrabber.getWidth(), vidGrabber.getHeight());
 	//contourFinder.draw();
@@ -208,25 +217,28 @@ void ofApp::draw() {
 		followers[i].draw();
 	}
 	title.draw(0,0, 1920, 1080);
-	for (int i = 0; i < contourFinder.size(); i++) {
-		ofPushMatrix();
-		glTranslatef(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 0);
-		ofScale(arcScale, arcScale, 1);
-		for (int i = 0; i < nrOfCircles; i++)
-		{
-			arc* arcObject = arcs.at(i);
-			arcObject->draw(rotation);
-		}
+	if (tron) {
+		for (int i = 0; i < contourFinder.size(); i++) {
+			ofPushMatrix();
+			glTranslatef(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 0);
+			ofScale(arcScale, arcScale, 1);
+			for (int i = 0; i < nrOfCircles; i++)
+			{
+				arc* arcObject = arcs.at(i);
+				arcObject->draw(rotation);
+			}
 
-		ofPopMatrix();
-		//ofDrawCircle(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 20);
-		//slak.draw(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 50, 50);
+			ofPopMatrix();
+			//ofDrawCircle(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 20);
+			//slak.draw(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 50, 50);
+		}
 	}
 	if (bDebug) {
 		ofSetHexColor(0xffffff);
 		grayImage.draw(360, 20, 320, 180);
 		grayBg.draw(20, 20, 320, 180);
 		grayDiff.draw(360, 280, 320, 180);
+		threshold.draw(20, 360, 320, 180);
 		contourFinder.draw();
 		/*for (int i = 0; i < contourFinder.nBlobs; i++) {
 			contourFinder.blobs[i].draw(360, 280);
@@ -237,6 +249,7 @@ void ofApp::draw() {
 	//ofFill();
 	ofSetLineWidth(4);
 	if (contour) {
+		ofSetColor(150);
 		contourFinder.draw();
 	}
 
@@ -349,6 +362,9 @@ void ofApp::keyPressed(int key) {
 		break;
 	case 'c':
 		contour = !contour;
+		break;
+	case 't':
+		tron = !tron;
 	}
 
 }

@@ -48,6 +48,7 @@ public:
 	ofxIntSlider        thresholdSlider;
 	ofxFloatSlider        minArea;
 	ofxFloatSlider        maxArea;
+	ofParameter<float> learningTime, thresholdValue;
 	ofxPanel            gui;
 	void keyPressed(int key);
 
@@ -64,5 +65,8 @@ public:
 	bool contour;
 	char snapString[255];
 	float arcScale;
+	bool tron;
+	ofxCv::RunningBackground runningBackground;
+	ofImage threshold;
 
 };
