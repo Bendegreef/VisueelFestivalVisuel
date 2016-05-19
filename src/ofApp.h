@@ -21,6 +21,7 @@ public:
 	void update(const cv::Rect& track);
 	void kill();
 	void draw();
+	void myPolylineDraw(ofPolyline line);
 };
 
 class ofApp : public ofBaseApp {
@@ -62,4 +63,5 @@ public:
 	bool bSnapshot;
 	char snapString[255];
 	float arcScale;
+
 };

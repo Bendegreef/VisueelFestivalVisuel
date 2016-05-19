@@ -50,12 +50,13 @@ void Glow::draw() {
 	ofNoFill();
 	//ofDrawCircle(cur, size);
 	ofSetColor(color);
-	all.draw();
+	myPolylineDraw(all);
 	//all.
 	ofSetColor(255);
 	//ofDrawBitmapString(ofToString(label), cur);
 	ofPopStyle();
 }
+
 
 void ofApp::setup() {
 	createNewArcs();
@@ -345,6 +346,19 @@ void ofApp::keyPressed(int key) {
 		break;
 	}
 
+}
+
+void Glow::myPolylineDraw(ofPolyline line) {
+	if (line.size() > 2) {
+		float getHueAngle = color.getHueAngle();
+		ofColor tmpColor = color;
+		for (int i = 0; i < line.size() - 1; i++) {
+			getHueAngle += 1;
+			tmpColor.setHueAngle(getHueAngle);
+			ofSetColor(tmpColor);
+			ofDrawLine(line[i], line[i + 1]);
+		}
+	}
 }
 
 /*void ofApp::mouseReleased(int x, int y, int button) {
