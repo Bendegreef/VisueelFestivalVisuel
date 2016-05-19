@@ -198,7 +198,7 @@ void ofApp::update() {
 		contourFinder.setMaxArea(maxArea);
 		contourFinder.setMinArea(minArea);
 		contourFinder.findContours(grayImage);
-		//tracker.track(contourFinder.getBoundingRects());
+		tracker.track(contourFinder.getBoundingRects());
 	
 		
 	}
