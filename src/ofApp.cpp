@@ -11,8 +11,8 @@ int nrOfCircles = 0;
 float rotation = 0;
 float rotationSteps = 0;
 float lastSwitch;
-bool closing;
-bool opening;
+//bool closing;
+//bool opening;
 
 void Glow::setup(const cv::Rect& track) {
 	color.setHsb(ofRandom(255), 250, 250);
@@ -60,8 +60,8 @@ void Glow::draw() {
 
 void ofApp::setup() {
 	createNewArcs();
-	closing = false;
-	opening = true;
+	//closing = false;
+	//opening = true;
 	ofSetVerticalSync(true);
 	ofBackground(0);
 
@@ -69,6 +69,7 @@ void ofApp::setup() {
 	rotationSteps = 8;
 	snapCounter = 0;
 	bSnapshot = false;
+	contour = false;
 	arcScale = 0.30;
 
 	/*movie.load("video.mov");
@@ -235,6 +236,9 @@ void ofApp::draw() {
 	}
 	//ofFill();
 	ofSetLineWidth(4);
+	if (contour) {
+		contourFinder.draw();
+	}
 
 
 	// uncomment to see the frame - currently framerate limited to 60fps
@@ -339,10 +343,12 @@ void ofApp::keyPressed(int key) {
 	case 'd':
 		bDebug = !bDebug;
 		break;
-	case 'c':
+	case 'b':
 		backgroundAuto = !backgroundAuto;
 		ofSetBackgroundAuto(backgroundAuto);
 		break;
+	case 'c':
+		contour = !contour;
 	}
 
 }
