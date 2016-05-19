@@ -337,10 +337,10 @@ void ofApp::keyPressed(int key) {
 
 }
 
-void ofApp::mouseReleased(int x, int y, int button) {
+/*void ofApp::mouseReleased(int x, int y, int button) {
 	closing = true;
 	opening = false;
 	lastSwitch = ofGetElapsedTimef();
 
-}
+}*/
 

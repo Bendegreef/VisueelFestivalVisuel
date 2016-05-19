@@ -27,7 +27,7 @@ public:
 	void setup();
 	void update();
 	void draw();
-	void mouseReleased(int x, int y, int button);
+	//void mouseReleased(int x, int y, int button);
 
 	float scale;
 
