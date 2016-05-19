@@ -205,7 +205,6 @@ void ofApp::draw() {
 
 	for (int i = 0; i < followers.size(); i++) {
 		followers[i].draw();
-
 	}
 	title.draw(0,0, 1920, 1080);
 	for (int i = 0; i < contourFinder.size(); i++) {
