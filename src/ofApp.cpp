@@ -350,20 +350,26 @@ void ofApp::createNewArcs()
 void ofApp::keyPressed(int key) {
 	switch (key) {
 	case ' ':
+		//ref background nemen
 		bLearnBakground = true;
 		break;
 	case 'd':
+		//debug
 		bDebug = !bDebug;
 		break;
 	case 'b':
+		//backgroundauto aanzetten
 		backgroundAuto = !backgroundAuto;
 		ofSetBackgroundAuto(backgroundAuto);
 		break;
 	case 'c':
+		//contour aanzetten
 		contour = !contour;
 		break;
 	case 't':
+		//troncirckelsaanzetten
 		tron = !tron;
+		break;
 	}
 
 }

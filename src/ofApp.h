@@ -22,6 +22,7 @@ public:
 	void kill();
 	void draw();
 	void myPolylineDraw(ofPolyline line);
+
 };
 
 class ofApp : public ofBaseApp {
