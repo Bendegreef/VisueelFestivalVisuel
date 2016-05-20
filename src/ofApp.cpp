@@ -171,7 +171,7 @@ void ofApp::update() {
 	if (bNewFrame) {
 		colorImg.setFromPixels(vidGrabber.getPixels());
 		
-		//colorImg.mirror(false, true);
+		colorImg.mirror(false, true);
 
 		grayImage = colorImg;
 		if (bLearnBakground == true) {
