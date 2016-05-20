@@ -64,5 +64,6 @@ public:
 	bool contour;
 	char snapString[255];
 	float arcScale;
+	bool tron;
 
 };

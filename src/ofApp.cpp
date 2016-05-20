@@ -208,19 +208,21 @@ void ofApp::draw() {
 		followers[i].draw();
 	}
 	title.draw(0,0, 1920, 1080);
-	for (int i = 0; i < contourFinder.size(); i++) {
-		ofPushMatrix();
-		glTranslatef(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 0);
-		ofScale(arcScale, arcScale, 1);
-		for (int i = 0; i < nrOfCircles; i++)
-		{
-			arc* arcObject = arcs.at(i);
-			arcObject->draw(rotation);
-		}
+	if (tron) {
+		for (int i = 0; i < contourFinder.size(); i++) {
+			ofPushMatrix();
+			glTranslatef(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 0);
+			ofScale(arcScale, arcScale, 1);
+			for (int i = 0; i < nrOfCircles; i++)
+			{
+				arc* arcObject = arcs.at(i);
+				arcObject->draw(rotation);
+			}
 
-		ofPopMatrix();
-		//ofDrawCircle(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 20);
-		//slak.draw(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 50, 50);
+			ofPopMatrix();
+			//ofDrawCircle(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 20);
+			//slak.draw(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 50, 50);
+		}
 	}
 	if (bDebug) {
 		ofSetHexColor(0xffffff);
@@ -237,6 +239,7 @@ void ofApp::draw() {
 	//ofFill();
 	ofSetLineWidth(4);
 	if (contour) {
+		ofSetColor(150);
 		contourFinder.draw();
 	}
 
@@ -349,6 +352,10 @@ void ofApp::keyPressed(int key) {
 		break;
 	case 'c':
 		contour = !contour;
+		break;
+	case 't':
+		tron = !tron;
+		break;
 	}
 
 }
