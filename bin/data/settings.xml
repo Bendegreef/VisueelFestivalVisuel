@@ -3,4 +3,6 @@
 	<minArea>3000</minArea>
 	<maxArea>100000</maxArea>
 <group/>
+<Learning_Time>1.5</Learning_Time>
+	<Threshold_Value>10</Threshold_Value>
 </group>
