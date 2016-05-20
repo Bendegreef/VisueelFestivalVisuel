@@ -3,7 +3,7 @@
 using namespace ofxCv;
 using namespace cv;
 
-const float dyingTime = 600;
+float dyingTime;
 
 
 //deel code kris Meeusen
@@ -110,6 +110,7 @@ void ofApp::setup() {
 	gui.add(maxArea.setup("maxArea", 540, 1, 100000));
 	gui.add(learningTime.set("Learning Time", 30, 0, 30));
 	gui.add(thresholdValue.set("Threshold Value", 10, 0, 255));
+	gui.add(dyingTimeGui.setup("Dying Time", 40, 1, 3600));
 	gui.loadFromFile("settings.xml");
 
 	ofSetFrameRate(60);
@@ -194,7 +195,7 @@ void ofApp::update() {
 		// take the abs value of the difference between background and incoming and then threshold:
 		//grayDiff.absDiff(grayBg, grayImage);
 		//grayDiff.threshold(thresholdSlider);
-
+		dyingTime = dyingTimeGui;
 		contourFinder.setMaxArea(maxArea);
 		contourFinder.setMinArea(minArea);
 		contourFinder.findContours(grayImage);
@@ -239,6 +240,7 @@ void ofApp::draw() {
 		grayDiff.draw(360, 280, 320, 180);
 		threshold.draw(20, 360, 320, 180);
 		contourFinder.draw();
+		gui.draw();
 		/*for (int i = 0; i < contourFinder.nBlobs; i++) {
 			contourFinder.blobs[i].draw(360, 280);
 		}*/
@@ -260,7 +262,7 @@ void ofApp::draw() {
 	ofDrawBitmapString(fpsStr, 10,10);
 	*/
 
-	gui.draw();
+	
 
 }
 

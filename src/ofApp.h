@@ -50,6 +50,7 @@ public:
 	ofxFloatSlider        minArea;
 	ofxFloatSlider        maxArea;
 	ofParameter<float> learningTime, thresholdValue;
+	ofxFloatSlider dyingTimeGui;
 	ofxPanel            gui;
 	void keyPressed(int key);
 
