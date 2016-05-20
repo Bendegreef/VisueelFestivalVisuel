@@ -54,7 +54,14 @@ public:
 	ofxPanel            gui;
 	void keyPressed(int key);
 
-	ofImage title;
+	ofImage title1;
+	ofImage title2;
+	ofImage title3;
+	ofImage title4;
+	ofImage title5;
+	ofImage title6;
+	ofImage title7;
+
 	ofImage slak;
 	//ofImage beeldOpslaan;
 	//ofImage standaard;
@@ -70,5 +77,8 @@ public:
 	bool tron;
 	ofxCv::RunningBackground runningBackground;
 	ofImage threshold;
+	vector<ofImage> backgrounds;
+
+	int backgroundNumber;
 
 };

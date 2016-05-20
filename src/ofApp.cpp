@@ -81,14 +81,14 @@ void ofApp::setup() {
 	vidGrabber.listDevices();
 	vidGrabber.setDeviceID(0);
 	vidGrabber.setVerbose(true);
-	vidGrabber.setup(1280, 720);
+	vidGrabber.setup(1920,1080);
 
 
 
-	colorImg.allocate(1280, 720);
-	grayImage.allocate(1280, 720);
-	grayBg.allocate(1280, 720);
-	grayDiff.allocate(1280, 720);
+	colorImg.allocate(1920,1080);
+	grayImage.allocate(1920,1080);
+	grayBg.allocate(1920,1080);
+	grayDiff.allocate(1920,1080);
 	//beeldOpslaan.allocate(1920, 1080, OF_IMAGE_COLOR);
 	//standaard.allocate(1920, 1080, OF_IMAGE_COLOR);
 
@@ -123,7 +123,20 @@ void ofApp::setup() {
 	tracker.setPersistence(15);
 	// an object can move up to 50 pixels per frame
 	tracker.setMaximumDistance(50);
-	title.load("Title50.png");
+	title1.load("Title50.png");
+	title2.load("backgroundAmericanTypewriter.png");
+	title3.load("backgroundBigJohn.png");
+	title4.load("backgroundComicSans.png");
+	title5.load("backgroundFuturaBoldRound.png");
+	title6.load("backgroundJaapokki.png");
+	title7.load("backgroundMontserratBold.png");
+	backgrounds.push_back(title1);
+	backgrounds.push_back(title2); 
+	backgrounds.push_back(title3);
+	backgrounds.push_back(title4);
+	backgrounds.push_back(title5);
+	backgrounds.push_back(title6);
+	backgrounds.push_back(title7);
 	//ofSetFullscreen(true);
 	//slak.load("cartoon-snail.png");
 }
@@ -216,7 +229,7 @@ void ofApp::draw() {
 	for (int i = 0; i < followers.size(); i++) {
 		followers[i].draw();
 	}
-	title.draw(0,0, 1280, 720);
+	backgrounds[backgroundNumber].draw(0,0, 1920,1080);
 	if (tron) {
 		for (int i = 0; i < contourFinder.size(); i++) {
 			ofPushMatrix();
@@ -371,6 +384,27 @@ void ofApp::keyPressed(int key) {
 	case 't':
 		//troncirckelsaanzetten
 		tron = !tron;
+		break;
+	case '1':
+		backgroundNumber = 0;
+		break;
+	case '2':
+		backgroundNumber = 1;
+		break; 
+	case '3':
+		backgroundNumber = 2;
+		break; 
+	case '4':
+		backgroundNumber = 3;
+		break;
+	case '5':
+		backgroundNumber = 4;
+		break;
+	case '6':
+		backgroundNumber = 5;
+		break;
+	case '7':
+		backgroundNumber = 6;
 		break;
 	}
 
