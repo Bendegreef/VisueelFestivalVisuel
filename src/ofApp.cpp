@@ -81,14 +81,14 @@ void ofApp::setup() {
 	vidGrabber.listDevices();
 	vidGrabber.setDeviceID(0);
 	vidGrabber.setVerbose(true);
-	vidGrabber.setup(1920, 1080);
+	vidGrabber.setup(1280, 720);
 
 
 
-	colorImg.allocate(1920, 1080);
-	grayImage.allocate(1920, 1080);
-	grayBg.allocate(1920, 1080);
-	grayDiff.allocate(1920, 1080);
+	colorImg.allocate(1280, 720);
+	grayImage.allocate(1280, 720);
+	grayBg.allocate(1280, 720);
+	grayDiff.allocate(1280, 720);
 	//beeldOpslaan.allocate(1920, 1080, OF_IMAGE_COLOR);
 	//standaard.allocate(1920, 1080, OF_IMAGE_COLOR);
 
@@ -123,8 +123,8 @@ void ofApp::setup() {
 	// an object can move up to 50 pixels per frame
 	tracker.setMaximumDistance(50);
 	title.load("Title50.png");
-	ofSetFullscreen(true);
-	slak.load("cartoon-snail.png");
+	//ofSetFullscreen(true);
+	//slak.load("cartoon-snail.png");
 }
 
 void ofApp::update() {
@@ -215,7 +215,7 @@ void ofApp::draw() {
 	for (int i = 0; i < followers.size(); i++) {
 		followers[i].draw();
 	}
-	title.draw(0,0, 1920, 1080);
+	title.draw(0,0, 1280, 720);
 	if (tron) {
 		for (int i = 0; i < contourFinder.size(); i++) {
 			ofPushMatrix();
