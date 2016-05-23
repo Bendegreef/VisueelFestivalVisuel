@@ -75,4 +75,6 @@ public:
 	float arcScale;
 	bool tron;
 
+	int backgroundNumber;
+
 };
