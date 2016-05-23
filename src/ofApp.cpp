@@ -62,7 +62,7 @@ void ofApp::setup() {
 	vidGrabber.listDevices();
 	vidGrabber.setDeviceID(0);
 	vidGrabber.setVerbose(true);
-	vidGrabber.setup(1920,1080);
+	vidGrabber.setup(320,180);
 
 
 
@@ -113,16 +113,16 @@ void ofApp::update() {
 	bool bNewFrame = false;
 	bNewFrame = vidGrabber.isFrameNew();
 
-	if (hasCameraStarted) {
+	if (!hasCameraStarted && bNewFrame) {
 
-		colorImg.allocate(1920, 1080);
-		grayImage.allocate(1920, 1080);
-		grayBg.allocate(1920, 1080);
-		grayDiff.allocate(1920, 1080);
+		colorImg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
+		grayImage.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
+		grayBg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
+		grayDiff.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
 
-		hasCameraStarted = false;
+		hasCameraStarted = true;
 	}
-	if (bNewFrame) {
+	if (bNewFrame && hasCameraStarted) {
 
 		runningBackground.setLearningTime(learningTime);
 		runningBackground.setThresholdValue(thresholdValue);
@@ -150,6 +150,7 @@ void ofApp::draw() {
 
 
 	for (int i = 0; i < followers.size(); i++) {
+		followers[i].vidGrabSize = ofVec2f(vidGrabber.getWidth(), vidGrabber.getHeight());
 		followers[i].draw();
 	}
 	backgrounds[backgroundNumber].draw(0,0, 1920,1080);
@@ -226,7 +227,13 @@ void Glow::myPolylineDraw(ofPolyline line) {
 			getHueAngle += 1;
 			tmpColor.setHueAngle(getHueAngle);
 			ofSetColor(tmpColor);
-			ofDrawLine(line[i], line[i + 1]);
+			ofDrawLine(translateToScreen(line[i]), translateToScreen(line[i+1]));
 		}
 	}
+}
+
+ofVec2f Glow::translateToScreen(ofVec2f input) {
+	input.x = ofMap(input.x, 0, vidGrabSize.x, 0, ofGetWindowWidth());
+	input.y = ofMap(input.y, 0, vidGrabSize.y, 0, ofGetWindowHeight());
+	return input;
 }

@@ -22,6 +22,8 @@ public:
 	void kill();
 	void draw();
 	void myPolylineDraw(ofPolyline line);
+	ofVec2f translateToScreen(ofVec2f input);
+	ofVec2f vidGrabSize;
 
 };
 
