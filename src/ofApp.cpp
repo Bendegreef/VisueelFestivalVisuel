@@ -119,9 +119,21 @@ void ofApp::setup() {
 	tracker.setPersistence(15);
 	// an object can move up to 50 pixels per frame
 	tracker.setMaximumDistance(50);
-	title.load("Title50.png");
+	title1.load("Title50.png");
+	title2.load("backgroundAmericanTypewriter.png");
+	title3.load("backgroundBigJohn.png");
+	title4.load("backgroundComicSans.png");
+	title5.load("backgroundFuturaBoldRound.png");
+	title6.load("backgroundJaapokki.png");
+	title7.load("backgroundMontserratBold.png");
+	backgrounds.push_back(title1);
+	backgrounds.push_back(title2);
+	backgrounds.push_back(title3);
+	backgrounds.push_back(title4);
+	backgrounds.push_back(title5);
+	backgrounds.push_back(title6);
+	backgrounds.push_back(title7);
 	ofSetFullscreen(true);
-	slak.load("cartoon-snail.png");
 }
 
 void ofApp::update() {

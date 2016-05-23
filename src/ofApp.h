@@ -51,7 +51,16 @@ public:
 	ofxPanel            gui;
 	void keyPressed(int key);
 
-	ofImage title;
+	ofImage title1;
+	ofImage title2;
+	ofImage title3;
+	ofImage title4;
+	ofImage title5;
+	ofImage title6;
+	ofImage title7;
+
+	vector<ofImage> backgrounds;
+
 	ofImage slak;
 	//ofImage beeldOpslaan;
 	//ofImage standaard;
