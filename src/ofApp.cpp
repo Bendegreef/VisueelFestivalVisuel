@@ -219,7 +219,7 @@ void ofApp::draw() {
 	for (int i = 0; i < followers.size(); i++) {
 		followers[i].draw();
 	}
-	title.draw(0,0, 1920, 1080);
+	backgrounds[backgroundNumber].draw(0, 0, 1920, 1080);
 	if (tron) {
 		for (int i = 0; i < contourFinder.size(); i++) {
 			ofPushMatrix();
@@ -367,6 +367,27 @@ void ofApp::keyPressed(int key) {
 		break;
 	case 't':
 		tron = !tron;
+		break;
+	case '1':
+		backgroundNumber = 0;
+		break;
+	case '2':
+		backgroundNumber = 1;
+		break;
+	case '3':
+		backgroundNumber = 2;
+		break;
+	case '4':
+		backgroundNumber = 3;
+		break;
+	case '5':
+		backgroundNumber = 4;
+		break;
+	case '6':
+		backgroundNumber = 5;
+		break;
+	case '7':
+		backgroundNumber = 6;
 		break;
 	}
 
