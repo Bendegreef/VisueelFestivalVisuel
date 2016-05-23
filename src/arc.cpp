@@ -8,13 +8,10 @@ void arc::createMesh()
 	// Use smaller steps on big circles
 	float angleSteps = 10 / innerRadius ;
 	
-	//mesh.setMode(ofPrimitive)
 	
 	mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
 	meshOutline.setMode(OF_PRIMITIVE_LINE_LOOP);
 
-	//mesh.setMode(OF_TRIANGLE_STRIP_MODE);
-	//meshOutline.setMode(OF_LINE_LOOP_MODE);
 
 	int index = 0;
 	float colorBlue = colorBlueStartFactor;
@@ -33,7 +30,6 @@ void arc::createMesh()
 		// adding the points for the border upper part
 		meshOutline.addVertex(ofVec3f(x,y,0));
 
-		//mesh.addColor(ofColor(0,colorBlue ,colorBlue- colorGreenCorrection));
 		mesh.addColor(ofFloatColor(0,colorBlue,colorBlue- colorGreenCorrection));
 		x = innerRadius * cos(angle);
 		y = innerRadius * sin(angle); 

@@ -30,7 +30,6 @@ public:
 	void setup();
 	void update();
 	void draw();
-	//void mouseReleased(int x, int y, int button);
 
 	float scale;
 
@@ -63,8 +62,6 @@ public:
 	ofImage title7;
 
 	ofImage slak;
-	//ofImage beeldOpslaan;
-	//ofImage standaard;
 
 	vector<arc*> arcs;
 	void createNewArcs();

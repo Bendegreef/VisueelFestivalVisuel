@@ -115,9 +115,6 @@ void ofApp::setup() {
 
 	ofSetFrameRate(60);
 
-	/*contourFinder.setMinAreaRadius(1);
-	contourFinder.setMaxAreaRadius(100);
-	contourFinder.setThreshold(15);*/
 
 	// wait for half a frame before forgetting something
 	tracker.setPersistence(15);
@@ -137,53 +134,16 @@ void ofApp::setup() {
 	backgrounds.push_back(title5);
 	backgrounds.push_back(title6);
 	backgrounds.push_back(title7);
-	//ofSetFullscreen(true);
-	//slak.load("cartoon-snail.png");
 }
 
 void ofApp::update() {
-	//ofBackground(100, 100, 100);
-	//movie.update();
-
 
 	rotation += rotationSteps;
-
-	/*if (ofGetElapsedTimef() - lastSwitch > 9 && !closing && !opening)
-	{
-		closing = true;
-		opening = false;
-	}
-
-	if (closing) {
-		arcScale -= (arcScale) / 8;
-
-		if (arcScale < 0.1)
-		{
-			createNewArcs();
-			opening = true;
-			closing = false;
-		}
-	}
-
-	if (opening) {
-		arcScale += (1 - arcScale) / 8;
-		if (scale > 0.99)
-		{
-			arcScale = 1;
-			lastSwitch = ofGetElapsedTimef();
-			opening = false;
-		}
-	}*/
 
 
 	vidGrabber.update();
 	bool bNewFrame = false;
 	bNewFrame = vidGrabber.isFrameNew();
-	/*if (movie.isFrameNew()) {
-		blur(movie, 10);
-		contourFinder.findContours(movie);
-		tracker.track(contourFinder.getBoundingRects());
-	}*/
 
 	if (bNewFrame) {
 
@@ -194,20 +154,8 @@ void ofApp::update() {
 
 		colorImg.setFromPixels(vidGrabber.getPixels());
 		
-		//colorImg.mirror(false, true);
-		
 		grayImage.setFromPixels(threshold.getPixels());
-		if (bLearnBakground == true) {
-			//grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
-			
-			//beeldOpslaan.setFromPixels(vidGrabber.getPixels());
-			//beeldOpslaan.saveImage("standaard.jpg");
-			//bLearnBakground = false;
-		}
-
-		// take the abs value of the difference between background and incoming and then threshold:
-		//grayDiff.absDiff(grayBg, grayImage);
-		//grayDiff.threshold(thresholdSlider);
+		
 		dyingTime = dyingTimeGui;
 		contourFinder.setMaxArea(maxArea);
 		contourFinder.setMinArea(minArea);
@@ -221,8 +169,6 @@ void ofApp::update() {
 void ofApp::draw() {
 
 	ofSetColor(255);
-	//vidGrabber.draw(vidGrabber.getWidth(), 0, -vidGrabber.getWidth(), vidGrabber.getHeight());
-	//contourFinder.draw();
 	vector<Glow>& followers = tracker.getFollowers();
 
 
@@ -242,8 +188,6 @@ void ofApp::draw() {
 			}
 
 			ofPopMatrix();
-			//ofDrawCircle(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 20);
-			//slak.draw(contourFinder.getCentroid(i).x, contourFinder.getCentroid(i).y, 50, 50);
 		}
 	}
 	if (bDebug) {
@@ -254,28 +198,14 @@ void ofApp::draw() {
 		threshold.draw(20, 360, 320, 180);
 		contourFinder.draw();
 		gui.draw();
-		/*for (int i = 0; i < contourFinder.nBlobs; i++) {
-			contourFinder.blobs[i].draw(360, 280);
-		}*/
 
 
 	}
-	//ofFill();
 	ofSetLineWidth(4);
 	if (contour) {
 		ofSetColor(150);
 		contourFinder.draw();
 	}
-
-
-	// uncomment to see the frame - currently framerate limited to 60fps
-	/*
-	char fpsStr[255]; // an array of chars
-	sprintf(fpsStr, "frame rate: %f", ofGetFrameRate());
-	ofDrawBitmapString(fpsStr, 10,10);
-	*/
-
-	
 
 }
 
@@ -338,7 +268,6 @@ void ofApp::createNewArcs()
 				lineWidth = 10;
 			}
 
-			//lineWidth = ofRandom(20) > 5 ? 10 : 20;
 
 			int marginRandom = ofRandom(0, 20);
 
@@ -353,8 +282,6 @@ void ofApp::createNewArcs()
 				margin = 30;
 			}
 		}
-
-		//cout << arcObject->startAngle << "  " << arcObject->endAngle << "   angle " << angle << "\n" ;
 
 		arcObject->createMesh();
 		arcs.push_back(arcObject);
@@ -422,11 +349,3 @@ void Glow::myPolylineDraw(ofPolyline line) {
 		}
 	}
 }
-
-/*void ofApp::mouseReleased(int x, int y, int button) {
-	closing = true;
-	opening = false;
-	lastSwitch = ofGetElapsedTimef();
-
-}*/
-
