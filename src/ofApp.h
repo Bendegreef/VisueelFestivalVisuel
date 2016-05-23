@@ -29,9 +29,7 @@ public:
 	void setup();
 	void update();
 	void draw();
-	//void mouseReleased(int x, int y, int button);
-
-	float scale;
+	void keyPressed(int key);
 
 	ofVideoPlayer movie;
 	ofxCv::ContourFinder contourFinder;
@@ -42,28 +40,23 @@ public:
 	ofxCvGrayscaleImage grayImage, grayBg, grayDiff;
 
 	bool bLearnBakground;
-	bool                bDebug;
+	bool bDebug;
 	bool backgroundAuto;
-
-	ofxIntSlider        thresholdSlider;
-	ofxFloatSlider        minArea;
-	ofxFloatSlider        maxArea;
-	ofxPanel            gui;
-	void keyPressed(int key);
-
-	ofImage title;
-	ofImage slak;
-	//ofImage beeldOpslaan;
-	//ofImage standaard;
-
-	vector<arc*> arcs;
-	void createNewArcs();
-	int snapCounter;
-	ofImage screenGrabber;
-	bool bSnapshot;
 	bool contour;
-	char snapString[255];
-	float arcScale;
 	bool tron;
 
+	ofxIntSlider thresholdSlider;
+	ofxFloatSlider minArea;
+	ofxFloatSlider maxArea;
+	ofxPanel gui;
+
+	ofImage title;
+	ofImage screenGrabber;
+
+	vector<arc*> arcs;
+
+	float scale;
+	float arcScale;
+
+	char snapString[255];
 };
