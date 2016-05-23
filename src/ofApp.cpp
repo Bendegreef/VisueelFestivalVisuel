@@ -134,6 +134,7 @@ void ofApp::setup() {
 	backgrounds.push_back(title5);
 	backgrounds.push_back(title6);
 	backgrounds.push_back(title7);
+	ofSetFullscreen(true);
 }
 
 void ofApp::update() {
