@@ -4,7 +4,7 @@
 #include "ofxCv.h"
 #include "ofxOpenCv.h"
 #include "ofxGui.h"
-#include "arc.h"
+
 
 class Glow : public ofxCv::RectFollower {
 protected:
@@ -52,8 +52,6 @@ public:
 
 	ofImage title;
 	ofImage screenGrabber;
-
-	vector<arc*> arcs;
 
 	float scale;
 	float arcScale;

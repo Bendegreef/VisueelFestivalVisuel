@@ -48,10 +48,9 @@ void Glow::draw() {
 void ofApp::setup() {
 	ofSetVerticalSync(true);
 	ofBackground(0);
-	contour = false;
-	arcScale = 0.30;
+	contour = true;
 
-
+	bLearnBakground = true;
 
 
 	vidGrabber.listDevices();
