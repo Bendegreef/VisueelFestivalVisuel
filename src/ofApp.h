@@ -12,6 +12,7 @@ protected:
 	ofVec2f cur, smooth;
 	float startedDying;
 	ofPolyline all;
+	ofPolyline all2;
 	float lineWidth;
 public:
 	Glow()
@@ -22,6 +23,7 @@ public:
 	void kill();
 	void draw();
 	void myPolylineDraw(ofPolyline line);
+	void myPolylineMultiDraw(ofPolyline line);
 };
 
 class ofApp : public ofBaseApp {

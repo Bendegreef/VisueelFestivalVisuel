@@ -177,3 +177,14 @@ void Glow::myPolylineDraw(ofPolyline line) {
 	}
 }
 
+void Glow::myPolylineMultiDraw(ofPolyline baseline) {
+	float randomX, randomY, randomX2, randomY2;
+
+	for (int i = 0; i < baseline.size(); i++) {
+		ofDrawLine(baseline[i], baseline[i + 1]);
+		ofDrawLine(baseline[i].x + randomX, baseline[i + 1].y + randomY, baseline[i + 1].x + randomX2, baseline[i + 1].y + randomY2);
+		randomX2 = randomX;
+		randomY
+	}
+}
+
