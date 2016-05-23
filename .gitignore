@@ -59,3 +59,5 @@ Temporary Items
 .apdisk
 src/ofApp.cpp~RF5b433d4.TMP
 src/ofApp.cpp~RF41ab37.TMP
+src/ofApp.h~RF15690a7.TMP
+*.TMP

@@ -104,6 +104,12 @@ void ofApp::setup() {
 	backgrounds.push_back(title6);
 	backgrounds.push_back(title7);
 	ofSetFullscreen(true);
+
+	rgbaFboFloat.allocate(ofGetScreenWidth(), ofGetScreenHeight(), GL_RGBA32F_ARB);
+
+	rgbaFboFloat.begin();
+	ofClear(255, 255, 255, 0);
+	rgbaFboFloat.end();
 }
 
 void ofApp::update() {
@@ -141,6 +147,25 @@ void ofApp::update() {
 	
 		
 	}
+
+	rgbaFboFloat.begin();
+	drawFboTest();
+	rgbaFboFloat.end();
+}
+
+void ofApp::drawFboTest() {
+	
+	fadeAmnt = 10;
+	ofFill();
+	ofSetColor(0, 0, 0, fadeAmnt);
+	ofDrawRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
+
+
+
+	
+	ofNoFill();
+	ofSetColor(255, 255, 255);
+
 }
 
 void ofApp::draw() {
@@ -170,6 +195,10 @@ void ofApp::draw() {
 		ofSetColor(150);
 		contourFinder.draw();
 	}
+
+	ofSetColor(255, 255, 255);
+	rgbaFboFloat.draw(410, 0);
+
 
 }
 

@@ -66,7 +66,6 @@ public:
 	ofImage slak;
 
 	vector<arc*> arcs;
-	void createNewArcs();
 	int snapCounter;
 	ofImage screenGrabber;
 	bool bSnapshot;
@@ -77,6 +76,12 @@ public:
 	ofxCv::RunningBackground runningBackground;
 	ofImage threshold;
 	vector<ofImage> backgrounds;
+
+	void drawFboTest();
+
+	ofFbo rgbaFboFloat;
+
+	int fadeAmnt;
 
 	int backgroundNumber;
 
