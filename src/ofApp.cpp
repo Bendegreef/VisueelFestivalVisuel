@@ -64,16 +64,14 @@ void ofApp::setup() {
 	vidGrabber.setVerbose(true);
 	vidGrabber.setup(1920,1080);
 
-	colorImg.allocate(1920,1080);
-	grayImage.allocate(1920,1080);
-	grayBg.allocate(1920,1080);
-	grayDiff.allocate(1920,1080);
+
 
 	bDebug = false;
 	backgroundAuto = false;
 
 	scale = 3;
 
+	hasCameraStarted = false;
 	
 	gui.setup(); // most of the time you don't need a name
 	gui.add(thresholdSlider.setup("threshold", 40, 1, 300));
@@ -115,6 +113,15 @@ void ofApp::update() {
 	bool bNewFrame = false;
 	bNewFrame = vidGrabber.isFrameNew();
 
+	if (hasCameraStarted) {
+
+		colorImg.allocate(1920, 1080);
+		grayImage.allocate(1920, 1080);
+		grayBg.allocate(1920, 1080);
+		grayDiff.allocate(1920, 1080);
+
+		hasCameraStarted = false;
+	}
 	if (bNewFrame) {
 
 		runningBackground.setLearningTime(learningTime);

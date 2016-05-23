@@ -78,4 +78,6 @@ public:
 
 	int backgroundNumber;
 
+	bool hasCameraStarted;
+
 };
