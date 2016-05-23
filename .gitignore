@@ -23,6 +23,7 @@ obj/*
 *.opendb
 *.VC.db
 bin/*
+!bin/data/*
 .vs/*
 
 # Windows shortcuts
