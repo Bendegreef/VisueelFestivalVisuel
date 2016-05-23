@@ -64,7 +64,6 @@ public:
 	ofImage slak;
 
 	vector<arc*> arcs;
-	void createNewArcs();
 	int snapCounter;
 	ofImage screenGrabber;
 	bool bSnapshot;
