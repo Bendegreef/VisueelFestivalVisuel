@@ -6,13 +6,15 @@ using namespace cv;
 const float dyingTime = 600;
 
 void Glow::setup(const cv::Rect& track) {
-	color.setHsb(ofRandom(255), 250, 250);
+	
+	//color.setHsb(ofRandom(255), 250, 250);
 	lineWidth = ofRandom(1, 3);
 	cur = toOf(track).getCenter();
 	smooth = cur;
 }
 
 void Glow::update(const cv::Rect& track) {
+	
 	cur = toOf(track).getCenter();
 	smooth.interpolate(cur, .5);
 	all.addVertex(smooth);
@@ -38,8 +40,10 @@ void Glow::draw() {
 		size = ofMap(ofGetElapsedTimef() - startedDying, 0, dyingTime, size, 0, true);
 	}
 	ofNoFill();
+	color.setHsb(static_cast<int>(ofGetElapsedTimef()) % 255, 255, 255);
 	ofSetColor(color);
-	myPolylineDraw(all);
+	//myPolylineDraw(all);
+	all.draw();
 	ofSetColor(255);
 	ofPopStyle();
 }
