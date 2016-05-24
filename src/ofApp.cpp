@@ -65,7 +65,6 @@ void ofApp::setup() {
 	vidGrabber.setup(320,180);
 
 
-
 	bDebug = false;
 	backgroundAuto = false;
 
@@ -160,7 +159,6 @@ void ofApp::draw() {
 		grayBg.draw(20, 20, 320, 180);
 		grayDiff.draw(360, 280, 320, 180);
 		threshold.draw(20, 360, 320, 180);
-		contourFinder.draw();
 		gui.draw();
 
 
@@ -168,7 +166,12 @@ void ofApp::draw() {
 	ofSetLineWidth(4);
 	if (contour) {
 		ofSetColor(150);
+		double scaleX = ofGetScreenWidth() / vidGrabber.getWidth();
+		double scaleY = ofGetScreenHeight() / vidGrabber.getHeight();
+		ofPushMatrix();
+		ofScale(scaleX, scaleY, 1);
 		contourFinder.draw();
+		ofPopMatrix();
 	}
 
 }
