@@ -15,10 +15,6 @@ void Glow::setup(const cv::Rect& track) {
 
 	kalman.init(1 / 10000., 1 / 10.); // inverse of (smoothness, rapidness)
 
-	/*line.setMode(OF_PRIMITIVE_LINE_STRIP);
-	predicted.setMode(OF_PRIMITIVE_LINE_STRIP);
-	estimated.setMode(OF_PRIMITIVE_LINE_STRIP);*/
-
 	speed = 0.f;
 }
 
@@ -38,8 +34,6 @@ void Glow::update(const cv::Rect& track) {
 
 		speed = kalman.getVelocity().length();
 	}
-	//cout << "id " << this->getLabel();
-	//cout << "smooth " << this->smooth.x << " " <<  this->smooth.y << endl;
 }
 
 void Glow::kill() {
@@ -75,12 +69,8 @@ void ofApp::setup() {
 	ofBackground(0);
 
 	contour = false;
-	arcScale = 0.30;
-
-	photoNr = 0;
 
 	ofSetBackgroundAuto(false);
-
 
 	vidGrabber.listDevices();
 	vidGrabber.setDeviceID(0);
@@ -164,13 +154,6 @@ void ofApp::update() {
 	
 		
 	}
-	/*if (static_cast<int>(ofGetElapsedTimef()) % 5 == 0) {
-		screenshot.grabScreen(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
-		ss << "Photo" << photoNr << ".png";
-		screenshot.save(ss.str());
-		ss.clear();
-		photoNr++;
-	}*/
 }
 
 void ofApp::draw() {
@@ -280,9 +263,6 @@ void Glow::myPolylineDraw(ofPolyline line) {
 				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 6)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 6)));
 				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 8)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 8)));
 			}
-			else {
-				//cout << "same " << endl;
-			}
 		}
 	}
 }
@@ -294,8 +274,6 @@ ofVec2f Glow::translateToScreen(ofVec2f input) {
 }
 
 ofVec2f Glow::berekenAlternatiefPunt(ofVec2f firstPoint, int index, int gap) {
-	//float angle = firstPoint.angle(secondPoint);
-	//float offset = ofMap(angle, -180, 180, -400, 400);
 	float offset = sin((float(index) / 15.0) + this->getLabel()) * gap;
 	firstPoint.x += offset * cos(this->getLabel());
 	firstPoint.y += offset * sin(this->getLabel());

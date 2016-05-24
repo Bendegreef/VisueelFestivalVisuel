@@ -73,8 +73,6 @@ public:
 	ofImage title6;
 	ofImage title7;
 
-	ofImage slak;
-
 	int snapCounter;
 	ofImage screenGrabber;
 	bool bSnapshot;
@@ -90,7 +88,4 @@ public:
 
 	bool hasCameraStarted;
 	bool printData;
-	ofImage screenshot;
-	int photoNr;
-	std::stringstream ss;
 };
