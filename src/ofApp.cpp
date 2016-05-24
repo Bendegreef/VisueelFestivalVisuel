@@ -18,6 +18,8 @@ void Glow::update(const cv::Rect& track) {
 	cur = toOf(track).getCenter();
 	smooth.interpolate(cur, .5);
 	all.addVertex(smooth);
+	//cout << "id " << this->getLabel();
+	//cout << "smooth " << this->smooth.x << " " <<  this->smooth.y << endl;
 }
 
 void Glow::kill() {
@@ -85,7 +87,7 @@ void ofApp::setup() {
 
 
 	// wait for half a frame before forgetting something
-	tracker.setPersistence(15);
+	tracker.setPersistence(60);
 	// an object can move up to 50 pixels per frame
 	tracker.setMaximumDistance(50);
 	title1.load("Title50.png");
@@ -103,6 +105,8 @@ void ofApp::setup() {
 	backgrounds.push_back(title6);
 	backgrounds.push_back(title7);
 	ofSetFullscreen(true);
+
+	printData = false;
 }
 
 void ofApp::update() {
@@ -173,7 +177,15 @@ void ofApp::draw() {
 		contourFinder.draw();
 		ofPopMatrix();
 	}
-
+	if (printData) {
+		for (int i = 0; i < followers.size(); i++) {
+			cout << "Id " << followers[i].getLabel() << endl;
+			for (int j = 0; j < followers[i].all.size(); j++) {
+				cout << "X " << followers[i].all[j].x << " Y " << followers[i].all[j].y << endl;
+			}
+		}
+		printData = false;
+	}
 }
 
 
@@ -218,6 +230,9 @@ void ofApp::keyPressed(int key) {
 	case '7':
 		backgroundNumber = 6;
 		break;
+	case 'p':
+		printData = true;
+		break;
 	}
 
 }
@@ -230,7 +245,17 @@ void Glow::myPolylineDraw(ofPolyline line) {
 			getHueAngle += 1;
 			tmpColor.setHueAngle(getHueAngle);
 			ofSetColor(tmpColor);
-			ofDrawLine(translateToScreen(line[i]), translateToScreen(line[i+1]));
+			if (line[i].distance(line[i + 1]) > 0.2)  {
+				
+				ofDrawLine(translateToScreen(line[i]), translateToScreen(line[i + 1]));
+				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 5)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 5)));
+				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 10)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 10)));
+				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 15)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 15)));
+				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 20)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 20)));
+			}
+			else {
+				//cout << "same " << endl;
+			}
 		}
 	}
 }
@@ -240,3 +265,13 @@ ofVec2f Glow::translateToScreen(ofVec2f input) {
 	input.y = ofMap(input.y, 0, vidGrabSize.y, 0, ofGetWindowHeight());
 	return input;
 }
+
+ofVec2f Glow::berekenAlternatiefPunt(ofVec2f firstPoint, int index, int gap) {
+	//float angle = firstPoint.angle(secondPoint);
+	//float offset = ofMap(angle, -180, 180, -400, 400);
+	float offset = sin(float(index) / 10.0) * gap;
+	//firstPoint.x += offset;
+	firstPoint.y += offset;
+	return firstPoint;
+}
+

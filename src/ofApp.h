@@ -11,9 +11,10 @@ protected:
 	ofColor color;
 	ofVec2f cur, smooth;
 	float startedDying;
-	ofPolyline all;
+	
 	float lineWidth;
 public:
+	ofPolyline all;
 	Glow()
 		:startedDying(0) {
 	}
@@ -24,6 +25,7 @@ public:
 	void myPolylineDraw(ofPolyline line);
 	ofVec2f translateToScreen(ofVec2f input);
 	ofVec2f vidGrabSize;
+	ofVec2f berekenAlternatiefPunt(ofVec2f eerstePunt, int index, int gap);
 
 };
 
@@ -65,8 +67,6 @@ public:
 
 	ofImage slak;
 
-	vector<arc*> arcs;
-	void createNewArcs();
 	int snapCounter;
 	ofImage screenGrabber;
 	bool bSnapshot;
@@ -81,5 +81,6 @@ public:
 	int backgroundNumber;
 
 	bool hasCameraStarted;
+	bool printData;
 
 };
