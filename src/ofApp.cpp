@@ -77,6 +77,10 @@ void ofApp::setup() {
 	vidGrabber.setVerbose(true);
 	vidGrabber.setup(320,180);
 
+	rgbaFboFloat.allocate(ofGetScreenWidth(), ofGetScreenHeight(), GL_RGBA32F_ARB);
+	rgbaFboFloat.begin();
+	ofClear(255, 255, 255, 0);
+	rgbaFboFloat.end();
 
 	bDebug = false;
 	backgroundAuto = false;
@@ -151,9 +155,10 @@ void ofApp::update() {
 		contourFinder.setMinArea(minArea);
 		contourFinder.findContours(grayImage);
 		tracker.track(contourFinder.getBoundingRects());
-	
-		
 	}
+	rgbaFboFloat.begin();
+	drawFboTest();
+	rgbaFboFloat.end();
 }
 
 void ofApp::draw() {
@@ -198,7 +203,9 @@ void ofApp::draw() {
 	}
 }
 
+void ofApp::drawFboTest() {
 
+}
 
 void ofApp::keyPressed(int key) {
 	switch (key) {
@@ -247,7 +254,7 @@ void ofApp::keyPressed(int key) {
 
 }
 
-void Glow::myPolylineDraw(ofPolyline line) {
+void Glow::myPolylineDraw(ofPolyline line, ofFbo& fboRef) {
 	if (line.size() > 6) {
 		float getHueAngle = color.getHueAngle();
 		ofColor tmpColor = color;
