@@ -3,51 +3,6 @@
 using namespace ofxCv;
 using namespace cv;
 
-float dyingTime;
-
-
-
-void Glow::setup(const cv::Rect& track) {
-	color.setHsb(ofRandom(255), 250, 250);
-	lineWidth = ofRandom(1, 3);
-	cur = toOf(track).getCenter();
-	smooth = cur;
-}
-
-void Glow::update(const cv::Rect& track) {
-	cur = toOf(track).getCenter();
-	smooth.interpolate(cur, .5);
-	all.addVertex(smooth);
-}
-
-void Glow::kill() {
-	float curTime = ofGetElapsedTimef();
-	if (startedDying == 0) {
-		startedDying = curTime;
-	}
-	else if (curTime - startedDying > dyingTime) {
-		dead = true;
-	}
-}
-
-void Glow::draw() {
-	
-	ofPushStyle();
-	float size = 1;
-	ofSetColor(255);
-	ofSetLineWidth(lineWidth);
-	if (startedDying) {
-		ofSetColor(ofColor::red);
-		size = ofMap(ofGetElapsedTimef() - startedDying, 0, dyingTime, size, 0, true);
-	}
-	ofNoFill();
-	ofSetColor(color);
-	myPolylineDraw(all);
-	ofSetColor(255);
-	ofPopStyle();
-}
-
-
 void ofApp::setup() {
 	ofSetVerticalSync(true);
 	ofBackground(0);
@@ -126,6 +81,8 @@ void ofApp::update() {
 		grayBg.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
 		grayDiff.allocate(vidGrabber.getWidth(), vidGrabber.getHeight());
 
+
+
 		hasCameraStarted = true;
 	}
 	if (bNewFrame && hasCameraStarted) {
@@ -137,13 +94,15 @@ void ofApp::update() {
 
 		colorImg.setFromPixels(vidGrabber.getPixels());
 		
+		tracker.track(contourFinder.getBoundingRects());
+
+		colorImg.setFromPixels(vidGrabber.getPixels());
+
 		grayImage.setFromPixels(threshold.getPixels());
 		
-		dyingTime = dyingTimeGui;
 		contourFinder.setMaxArea(maxArea);
 		contourFinder.setMinArea(minArea);
 		contourFinder.findContours(grayImage);
-		tracker.track(contourFinder.getBoundingRects());
 	
 		
 	}
@@ -246,23 +205,4 @@ void ofApp::keyPressed(int key) {
 		break;
 	}
 
-}
-
-void Glow::myPolylineDraw(ofPolyline line) {
-	if (line.size() > 2) {
-		float getHueAngle = color.getHueAngle();
-		ofColor tmpColor = color;
-		for (int i = 0; i < line.size() - 1; i++) {
-			getHueAngle += 1;
-			tmpColor.setHueAngle(getHueAngle);
-			ofSetColor(tmpColor);
-			ofDrawLine(translateToScreen(line[i]), translateToScreen(line[i+1]));
-		}
-	}
-}
-
-ofVec2f Glow::translateToScreen(ofVec2f input) {
-	input.x = ofMap(input.x, 0, vidGrabSize.x, 0, ofGetWindowWidth());
-	input.y = ofMap(input.y, 0, vidGrabSize.y, 0, ofGetWindowHeight());
-	return input;
 }
