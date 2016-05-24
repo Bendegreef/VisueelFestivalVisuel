@@ -8,7 +8,7 @@ float dyingTime;
 
 
 void Glow::setup(const cv::Rect& track) {
-	color.setHsb(ofRandom(255), 250, 250);
+	color.setHsb(ofRandom(255), 250, 250, 200);
 	lineWidth = ofRandom(1, 3);
 	cur = toOf(track).getCenter();
 	smooth = cur;
@@ -25,16 +25,19 @@ void Glow::setup(const cv::Rect& track) {
 void Glow::update(const cv::Rect& track) {
 	cur = toOf(track).getCenter();
 	smooth.interpolate(cur, .5);
-		all.addVertex(smooth);
+	all.addVertex(smooth);
+	if (smooth.x != 0 && smooth.y != 0) {
 		line.addVertex(smooth);
 		kalman.update(smooth);
 
-	point = kalman.getPrediction();
-	predicted.addVertex(point);
-	estimated.addVertex(kalman.getEstimation());
+		point = kalman.getPrediction();
+		if (point.x != 0 && point.y != 0) {
+			predicted.addVertex(point);
+			estimated.addVertex(kalman.getEstimation());
+		}
 
-	speed = kalman.getVelocity().length();
-
+		speed = kalman.getVelocity().length();
+	}
 	//cout << "id " << this->getLabel();
 	//cout << "smooth " << this->smooth.x << " " <<  this->smooth.y << endl;
 }
@@ -61,15 +64,7 @@ void Glow::draw() {
 	}
 	ofNoFill();
 	ofSetColor(color);
-	//myPolylineDraw(all);
-	double scaleX = ofGetScreenWidth() / vidGrabSize.x;
-	double scaleY = ofGetScreenHeight() / vidGrabSize.y;
-	ofPushMatrix();
-	ofScale(scaleX, scaleY, 1);
-	line.draw();
-	predicted.draw();
-	estimated.draw();
-	ofPopMatrix();
+	myPolylineDraw(estimated);
 	ofSetColor(255);
 	ofPopStyle();
 }
