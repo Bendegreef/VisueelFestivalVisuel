@@ -258,10 +258,10 @@ void ofApp::keyPressed(int key) {
 }
 
 void Glow::myPolylineDraw(ofPolyline line) {
-	if (line.size() > 2) {
+	if (line.size() > 6) {
 		float getHueAngle = color.getHueAngle();
 		ofColor tmpColor = color;
-		for (int i = 0; i < line.size() - 1; i++) {
+		for (int i = 4; i < line.size() - 1; i++) {
 			getHueAngle += 1;
 			tmpColor.setHueAngle(getHueAngle);
 			ofSetColor(tmpColor);
@@ -289,9 +289,9 @@ ofVec2f Glow::translateToScreen(ofVec2f input) {
 ofVec2f Glow::berekenAlternatiefPunt(ofVec2f firstPoint, int index, int gap) {
 	//float angle = firstPoint.angle(secondPoint);
 	//float offset = ofMap(angle, -180, 180, -400, 400);
-	float offset = sin(float(index) / 15.0) * gap;
-	//firstPoint.x += offset;
-	firstPoint.y += offset;
+	float offset = sin((float(index) / 15.0) + this->getLabel()) * gap;
+	firstPoint.x += offset * cos(this->getLabel());
+	firstPoint.y += offset * sin(this->getLabel());
 	return firstPoint;
 }
 
