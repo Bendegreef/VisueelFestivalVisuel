@@ -248,10 +248,10 @@ void Glow::myPolylineDraw(ofPolyline line) {
 			if (line[i].distance(line[i + 1]) > 0.2)  {
 				
 				ofDrawLine(translateToScreen(line[i]), translateToScreen(line[i + 1]));
-				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 5)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 5)));
-				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 10)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 10)));
-				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 15)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 15)));
-				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 20)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 20)));
+				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 2)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 2)));
+				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 4)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 4)));
+				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 6)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 6)));
+				ofDrawLine(translateToScreen(berekenAlternatiefPunt(line[i], i, 8)), translateToScreen(berekenAlternatiefPunt(line[i + 1], i + 1, 8)));
 			}
 			else {
 				//cout << "same " << endl;
@@ -269,7 +269,7 @@ ofVec2f Glow::translateToScreen(ofVec2f input) {
 ofVec2f Glow::berekenAlternatiefPunt(ofVec2f firstPoint, int index, int gap) {
 	//float angle = firstPoint.angle(secondPoint);
 	//float offset = ofMap(angle, -180, 180, -400, 400);
-	float offset = sin(float(index) / 10.0) * gap;
+	float offset = sin(float(index) / 15.0) * gap;
 	//firstPoint.x += offset;
 	firstPoint.y += offset;
 	return firstPoint;
