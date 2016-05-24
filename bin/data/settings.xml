@@ -1,9 +1,9 @@
 <group>
 	<threshold>36</threshold>
-	<minArea>3000</minArea>
-	<maxArea>100000</maxArea>
+	<minArea>300.99</minArea>
+	<maxArea>25500.7</maxArea>
 <group/>
-<Learning_Time>1.5</Learning_Time>
-	<Threshold_Value>10</Threshold_Value>
-<Dying_Time>1170.67</Dying_Time>
+<Learning_Time>30</Learning_Time>
+	<Threshold_Value>22.95</Threshold_Value>
+<Dying_Time>1386.61</Dying_Time>
 </group>

@@ -180,7 +180,7 @@ void ofApp::draw() {
 	if (bDebug) {
 		ofSetHexColor(0xffffff);
 		grayImage.draw(360, 20, 320, 180);
-		grayBg.draw(20, 20, 320, 180);
+		vidGrabber.draw(20, 20, 320, 180);
 		grayDiff.draw(360, 280, 320, 180);
 		threshold.draw(20, 360, 320, 180);
 		gui.draw();
