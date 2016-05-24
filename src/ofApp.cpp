@@ -12,12 +12,29 @@ void Glow::setup(const cv::Rect& track) {
 	lineWidth = ofRandom(1, 3);
 	cur = toOf(track).getCenter();
 	smooth = cur;
+
+	kalman.init(1 / 10000., 1 / 10.); // inverse of (smoothness, rapidness)
+
+	/*line.setMode(OF_PRIMITIVE_LINE_STRIP);
+	predicted.setMode(OF_PRIMITIVE_LINE_STRIP);
+	estimated.setMode(OF_PRIMITIVE_LINE_STRIP);*/
+
+	speed = 0.f;
 }
 
 void Glow::update(const cv::Rect& track) {
 	cur = toOf(track).getCenter();
 	smooth.interpolate(cur, .5);
-	all.addVertex(smooth);
+		all.addVertex(smooth);
+		line.addVertex(smooth);
+		kalman.update(smooth);
+
+	point = kalman.getPrediction();
+	predicted.addVertex(point);
+	estimated.addVertex(kalman.getEstimation());
+
+	speed = kalman.getVelocity().length();
+
 	//cout << "id " << this->getLabel();
 	//cout << "smooth " << this->smooth.x << " " <<  this->smooth.y << endl;
 }
@@ -44,7 +61,15 @@ void Glow::draw() {
 	}
 	ofNoFill();
 	ofSetColor(color);
-	myPolylineDraw(all);
+	//myPolylineDraw(all);
+	double scaleX = ofGetScreenWidth() / vidGrabSize.x;
+	double scaleY = ofGetScreenHeight() / vidGrabSize.y;
+	ofPushMatrix();
+	ofScale(scaleX, scaleY, 1);
+	line.draw();
+	predicted.draw();
+	estimated.draw();
+	ofPopMatrix();
 	ofSetColor(255);
 	ofPopStyle();
 }

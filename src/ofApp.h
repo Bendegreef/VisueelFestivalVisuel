@@ -26,6 +26,12 @@ public:
 	ofVec2f translateToScreen(ofVec2f input);
 	ofVec2f vidGrabSize;
 	ofVec2f berekenAlternatiefPunt(ofVec2f eerstePunt, int index, int gap);
+	ofxCv::KalmanPosition kalman;
+
+	ofPolyline predicted, line, estimated;
+	ofVec2f point;
+	float speed;
+
 
 };
 
@@ -40,6 +46,7 @@ public:
 	ofVideoPlayer movie;
 	ofxCv::ContourFinder contourFinder;
 	ofxCv::RectTrackerFollower<Glow> tracker;
+
 
 	ofVideoGrabber vidGrabber;
 	ofxCvColorImage colorImg;
