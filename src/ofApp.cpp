@@ -95,9 +95,8 @@ void ofApp::setup() {
 	hasCameraStarted = false;
 	
 	gui.setup(); // most of the time you don't need a name
-	gui.add(thresholdSlider.setup("threshold", 40, 1, 300));
-	gui.add(minArea.setup("minArea", 40, 1, 30000));
-	gui.add(maxArea.setup("maxArea", 540, 1, 100000));
+	gui.add(minArea.setup("minArea", 40, 1, 3000));
+	gui.add(maxArea.setup("maxArea", 540, 1, 10000));
 	gui.add(learningTime.set("Learning Time", 30, 0, 30));
 	gui.add(thresholdValue.set("Threshold Value", 10, 0, 255));
 	gui.add(dyingTimeGui.setup("Dying Time", 40, 1, 3600));
