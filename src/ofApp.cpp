@@ -164,11 +164,13 @@ void ofApp::update() {
 	
 		
 	}
+	/*if (static_cast<int>(ofGetElapsedTimef()) % 5 == 0) {
 		screenshot.grabScreen(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
 		ss << "Photo" << photoNr << ".png";
 		screenshot.save(ss.str());
 		ss.clear();
 		photoNr++;
+	}*/
 }
 
 void ofApp::draw() {
