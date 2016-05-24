@@ -5,6 +5,7 @@
 #include "ofxOpenCv.h"
 #include "ofxGui.h"
 #include "arc.h"
+#include <sstream>
 
 class Glow : public ofxCv::RectFollower {
 protected:
@@ -89,5 +90,7 @@ public:
 
 	bool hasCameraStarted;
 	bool printData;
-
+	ofImage screenshot;
+	int photoNr;
+	std::stringstream ss;
 };

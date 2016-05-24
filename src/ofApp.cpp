@@ -9,7 +9,7 @@ float dyingTime;
 
 void Glow::setup(const cv::Rect& track) {
 	color.setHsb(ofRandom(255), 250, 250, 200);
-	lineWidth = ofRandom(1, 3);
+	lineWidth = ofRandom(0.5, 1.5);
 	cur = toOf(track).getCenter();
 	smooth = cur;
 
@@ -77,6 +77,7 @@ void ofApp::setup() {
 	contour = false;
 	arcScale = 0.30;
 
+	photoNr = 0;
 
 	ofSetBackgroundAuto(false);
 
@@ -163,6 +164,11 @@ void ofApp::update() {
 	
 		
 	}
+		screenshot.grabScreen(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
+		ss << "Photo" << photoNr << ".png";
+		screenshot.save(ss.str());
+		ss.clear();
+		photoNr++;
 }
 
 void ofApp::draw() {
