@@ -25,16 +25,13 @@ void Glow::update(const cv::Rect& track) {
 	}
 	cur = toOf(track).getCenter();
 	smooth.interpolate(cur, .5);
-	//all.addVertex(smooth);
 
 
 	if (smooth.x != 0 && smooth.y != 0) {
-		//line.addVertex(smooth);
 		kalman.update(smooth);
 
 		point = kalman.getPrediction();
 		if (point.x != 0 && point.y != 0) {
-			//predicted.addVertex(point);
 			estimated.addVertex(kalman.getEstimation());
 		}
 
@@ -49,13 +46,7 @@ void Glow::update(const cv::Rect& track) {
 }
 
 void Glow::kill() {
-	//float curTime = ofGetElapsedTimef();
-	//if (startedDying == 0) {
-	//	startedDying = curTime;
-	//}
-	//else if (curTime - startedDying > dyingTime) {
 		dead = true;
-	//}
 }
 
 void Glow::draw() {
@@ -175,9 +166,6 @@ void ofApp::update() {
 		contourFinder.findContours(grayImage);
 		tracker.track(contourFinder.getBoundingRects());
 	}
-	//rgbaFboFloat.begin();
-	//drawFboTest();
-	//rgbaFboFloat.end();
 }
 
 void ofApp::draw() {
