@@ -16,9 +16,13 @@ void Glow::setup(const cv::Rect& track) {
 	kalman.init(1 / 10000., 1 / 10.); // inverse of (smoothness, rapidness)
 
 	speed = 0.f;
+	frameBuffer = nullptr;
 }
 
 void Glow::update(const cv::Rect& track) {
+	if (frameBuffer == nullptr) {
+		return;
+	}
 	cur = toOf(track).getCenter();
 	smooth.interpolate(cur, .5);
 	all.addVertex(smooth);
@@ -34,6 +38,9 @@ void Glow::update(const cv::Rect& track) {
 
 		speed = kalman.getVelocity().length();
 	}
+
+
+
 }
 
 void Glow::kill() {
@@ -47,7 +54,9 @@ void Glow::kill() {
 }
 
 void Glow::draw() {
-	
+	if (frameBuffer == nullptr) {
+		return;
+	}
 	ofPushStyle();
 	float size = 1;
 	ofSetColor(255);
@@ -124,6 +133,11 @@ void ofApp::setup() {
 }
 
 void ofApp::update() {
+	vector<Glow>& followers = tracker.getFollowers();
+	//followers = tracker.getFollowers();
+	for (int i = 0; i < followers.size(); i++) {
+		followers[i].frameBuffer = &rgbaFboFloat;
+	}
 
 
 	vidGrabber.update();
@@ -156,18 +170,18 @@ void ofApp::update() {
 		contourFinder.findContours(grayImage);
 		tracker.track(contourFinder.getBoundingRects());
 	}
-	rgbaFboFloat.begin();
-	drawFboTest();
-	rgbaFboFloat.end();
+	//rgbaFboFloat.begin();
+	//drawFboTest();
+	//rgbaFboFloat.end();
 }
 
 void ofApp::draw() {
 
-	rgbaFboFloat.draw();
+	rgbaFboFloat.draw(0,0);
 
 	ofSetColor(255);
+	
 	vector<Glow>& followers = tracker.getFollowers();
-
 
 	for (int i = 0; i < followers.size(); i++) {
 		followers[i].vidGrabSize = ofVec2f(vidGrabber.getWidth(), vidGrabber.getHeight());
@@ -258,7 +272,8 @@ void ofApp::keyPressed(int key) {
 
 }
 
-void Glow::myPolylineDraw(ofPolyline line, ofFbo& fboRef) {
+void Glow::myPolylineDraw(ofPolyline line) {
+	frameBuffer->begin();
 	if (line.size() > 6) {
 		float getHueAngle = color.getHueAngle();
 		ofColor tmpColor = color;
@@ -276,6 +291,7 @@ void Glow::myPolylineDraw(ofPolyline line, ofFbo& fboRef) {
 			}
 		}
 	}
+	frameBuffer->end();
 }
 
 ofVec2f Glow::translateToScreen(ofVec2f input) {

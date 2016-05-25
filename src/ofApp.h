@@ -16,6 +16,7 @@ protected:
 	float lineWidth;
 public:
 	ofPolyline all;
+	ofFbo* frameBuffer;
 	Glow()
 		:startedDying(0) {
 	}
@@ -23,7 +24,7 @@ public:
 	void update(const cv::Rect& track);
 	void kill();
 	void draw();
-	void myPolylineDraw(ofPolyline line, ofFbo& fboRef);
+	void myPolylineDraw(ofPolyline line);
 	ofVec2f translateToScreen(ofVec2f input);
 	ofVec2f vidGrabSize;
 	ofVec2f berekenAlternatiefPunt(ofVec2f eerstePunt, int index, int gap);
@@ -46,6 +47,7 @@ public:
 
 	ofVideoPlayer movie;
 	ofxCv::ContourFinder contourFinder;
+	//vector<Glow>& followers;
 	ofxCv::RectTrackerFollower<Glow> tracker;
 
 
