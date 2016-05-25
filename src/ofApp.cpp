@@ -163,6 +163,8 @@ void ofApp::update() {
 
 void ofApp::draw() {
 
+	rgbaFboFloat.draw();
+
 	ofSetColor(255);
 	vector<Glow>& followers = tracker.getFollowers();
 
@@ -201,6 +203,8 @@ void ofApp::draw() {
 		}
 		printData = false;
 	}
+
+	
 }
 
 void ofApp::drawFboTest() {
