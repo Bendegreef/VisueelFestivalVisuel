@@ -25,18 +25,23 @@ void Glow::update(const cv::Rect& track) {
 	}
 	cur = toOf(track).getCenter();
 	smooth.interpolate(cur, .5);
-	all.addVertex(smooth);
+	//all.addVertex(smooth);
+
+
 	if (smooth.x != 0 && smooth.y != 0) {
-		line.addVertex(smooth);
+		//line.addVertex(smooth);
 		kalman.update(smooth);
 
 		point = kalman.getPrediction();
 		if (point.x != 0 && point.y != 0) {
-			predicted.addVertex(point);
+			//predicted.addVertex(point);
 			estimated.addVertex(kalman.getEstimation());
 		}
 
 		speed = kalman.getVelocity().length();
+	}
+
+	if (estimated.size() > 8){
 	}
 
 
@@ -44,13 +49,13 @@ void Glow::update(const cv::Rect& track) {
 }
 
 void Glow::kill() {
-	float curTime = ofGetElapsedTimef();
-	if (startedDying == 0) {
-		startedDying = curTime;
-	}
-	else if (curTime - startedDying > dyingTime) {
+	//float curTime = ofGetElapsedTimef();
+	//if (startedDying == 0) {
+	//	startedDying = curTime;
+	//}
+	//else if (curTime - startedDying > dyingTime) {
 		dead = true;
-	}
+	//}
 }
 
 void Glow::draw() {
@@ -277,7 +282,7 @@ void Glow::myPolylineDraw(ofPolyline line) {
 	if (line.size() > 6) {
 		float getHueAngle = color.getHueAngle();
 		ofColor tmpColor = color;
-		for (int i = 4; i < line.size() - 1; i++) {
+		for (int i = line.size() - 2; i < line.size() - 1; i++) {
 			getHueAngle += 1;
 			tmpColor.setHueAngle(getHueAngle);
 			ofSetColor(tmpColor);
