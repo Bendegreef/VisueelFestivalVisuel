@@ -167,8 +167,9 @@ void ofApp::update() {
 
 		colorImg.setFromPixels(vidGrabber.getPixels());
 		
-		grayImage.setFromPixels(threshold.getPixels());
 		
+		grayImage.setFromPixels(threshold.getPixels());
+		grayImage.mirror(false, true);
 		dyingTime = dyingTimeGui;
 		contourFinder.setMaxArea(maxArea);
 		contourFinder.setMinArea(minArea);
