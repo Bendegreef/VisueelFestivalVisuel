@@ -8,7 +8,7 @@ float dyingTime;
 
 
 void Glow::setup(const cv::Rect& track) {
-	color.setHsb(ofRandom(255), 250, 250, 200);
+	color.setHsb(ofRandom(255), 255, 255, 255);
 	lineWidth = ofRandom(0.5, 1.5);
 	cur = toOf(track).getCenter();
 	smooth = cur;
@@ -82,9 +82,9 @@ void ofApp::setup() {
 	ofSetVerticalSync(true);
 	ofBackground(0);
 
-	contour = false;
+	contour = true;
 
-	ofSetBackgroundAuto(false);
+	ofSetBackgroundAuto(true);
 
 	vidGrabber.listDevices();
 	vidGrabber.setDeviceID(0);
@@ -175,9 +175,12 @@ void ofApp::update() {
 		contourFinder.findContours(grayImage);
 		tracker.track(contourFinder.getBoundingRects());
 	}
-	//rgbaFboFloat.begin();
-	//drawFboTest();
-	//rgbaFboFloat.end();
+	if (ofGetFrameNum() % 50 == 0) {
+		rgbaFboFloat.begin();
+		ofSetColor(0, 0, 0, 1);
+		ofDrawRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
+		rgbaFboFloat.end();
+	}
 }
 
 void ofApp::draw() {
@@ -205,6 +208,7 @@ void ofApp::draw() {
 	}
 	ofSetLineWidth(4);
 	if (contour) {
+		ofPushStyle();
 		ofSetColor(150);
 		double scaleX = ofGetScreenWidth() / vidGrabber.getWidth();
 		double scaleY = ofGetScreenHeight() / vidGrabber.getHeight();
@@ -212,6 +216,7 @@ void ofApp::draw() {
 		ofScale(scaleX, scaleY, 1);
 		contourFinder.draw();
 		ofPopMatrix();
+		ofPopStyle();
 	}
 	if (printData) {
 		for (int i = 0; i < followers.size(); i++) {
@@ -280,6 +285,7 @@ void ofApp::keyPressed(int key) {
 void Glow::myPolylineDraw(ofPolyline line) {
 	frameBuffer->begin();
 	if (line.size() > 6) {
+
 		float getHueAngle = color.getHueAngle();
 		ofColor tmpColor = color;
 		for (int i = line.size() - 2; i < line.size() - 1; i++) {
