@@ -112,6 +112,7 @@ void ofApp::setup() {
 	hasCameraStarted = false;
 	
 	gui.setup(); // most of the time you don't need a name
+	gui.add(thresholdSlider.setup("threshold", 40, 1, 300));
 	gui.add(minArea.setup("minArea", 40, 1, 3000));
 	gui.add(maxArea.setup("maxArea", 540, 1, 10000));
 	gui.add(learningTime.set("Learning Time", 30, 0, 60));
@@ -186,7 +187,7 @@ void ofApp::update() {
 		dyingTime = dyingTimeGui;
 		contourFinder.setMaxArea(maxArea);
 		contourFinder.setMinArea(minArea);
-		contourFinder.findContours(grayImage);
+		contourFinder.findContours(grayDiff);
 		tracker.track(contourFinder.getBoundingRects());
 	}
 	if (ofGetFrameNum() % 50 == 0) {
@@ -213,9 +214,9 @@ void ofApp::draw() {
 	if (bDebug) {
 		ofSetHexColor(0xffffff);
 		grayImage.draw(360, 20, 320, 180);
-		vidGrabber.draw(20, 20, 320, 180);
+		grayBg.draw(20, 20, 320, 180);
 		grayDiff.draw(360, 280, 320, 180);
-		threshold.draw(20, 360, 320, 180);
+		//grayDiff.draw(20, 360, 320, 180);
 		gui.draw();
 
 
