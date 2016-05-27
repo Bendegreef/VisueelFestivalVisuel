@@ -8,7 +8,7 @@ float dyingTime;
 
 
 void Glow::setup(const cv::Rect& track) {
-	color.setHsb(ofRandom(255), 255, 255, 255);
+	color.setHsb(ofRandom(0, 128), 255, 255, 255);
 	lineWidth = ofRandom(0.5, 1.5);
 	cur = toOf(track).getCenter();
 	smooth = cur;
@@ -70,6 +70,14 @@ void Glow::draw() {
 		ofSetColor(ofColor::red);
 		size = ofMap(ofGetElapsedTimef() - startedDying, 0, dyingTime, size, 0, true);
 	}
+	ofSetColor(color);
+	double scaleX = ofGetScreenWidth() / vidGrabSize.x;
+	double scaleY = ofGetScreenHeight() / vidGrabSize.y;
+	ofPushMatrix();
+	ofScale(scaleX, scaleY, 1);
+	ofDrawCircle(smooth, 7);
+	ofPopMatrix();
+
 	ofNoFill();
 	ofSetColor(color);
 	myPolylineDraw(estimated);
@@ -106,7 +114,7 @@ void ofApp::setup() {
 	gui.setup(); // most of the time you don't need a name
 	gui.add(minArea.setup("minArea", 40, 1, 3000));
 	gui.add(maxArea.setup("maxArea", 540, 1, 10000));
-	gui.add(learningTime.set("Learning Time", 30, 0, 30));
+	gui.add(learningTime.set("Learning Time", 30, 0, 60));
 	gui.add(thresholdValue.set("Threshold Value", 10, 0, 255));
 	gui.add(dyingTimeGui.setup("Dying Time", 40, 1, 3600));
 	gui.loadFromFile("settings.xml");
@@ -218,6 +226,7 @@ void ofApp::draw() {
 		contourFinder.draw();
 		ofPopMatrix();
 		ofPopStyle();
+		
 	}
 	if (printData) {
 		for (int i = 0; i < followers.size(); i++) {
@@ -293,6 +302,7 @@ void Glow::myPolylineDraw(ofPolyline line) {
 			getHueAngle += 1;
 			tmpColor.setHueAngle(getHueAngle);
 			ofSetColor(tmpColor);
+			ofSetLineWidth(3);
 			if (line[i].distance(line[i + 1]) > 0.2)  {
 				
 				ofDrawLine(translateToScreen(line[i]), translateToScreen(line[i + 1]));
