@@ -174,9 +174,14 @@ void ofApp::update() {
 		threshold.update();
 
 		colorImg.setFromPixels(vidGrabber.getPixels());
-		
-		
-		grayImage.setFromPixels(threshold.getPixels());
+		colorImg.mirror(false, true);
+		grayImage = colorImg;
+		if (bLearnBakground == true) {
+			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
+			bLearnBakground = false;
+		}
+		grayDiff.absDiff(grayBg, grayImage);
+		grayDiff.threshold(thresholdSlider);
 		grayImage.mirror(false, true);
 		dyingTime = dyingTimeGui;
 		contourFinder.setMaxArea(maxArea);
